@@ -11,7 +11,12 @@ Make sure you have [docker-compose](http://docs.docker.com/compose/install/) ins
 ```bash
 git clone https://github.com/indiehosters/nextcloud.git
 cd nextcloud
-MYSQL_ROOT_PASSWORD=mystrongpassword docker-compose up
+echo 'MYSQL_ROOT_PASSWORD=mystrongpassword' > .env
+pushd certs
+cd certs
+openssl req -new -x509 -nodes -out server.crt -keyout server.key
+popd
+docker-compose up
 ```
 
 You can now access your instance on the port 80 of the IP of your machine (not recommended for production).
